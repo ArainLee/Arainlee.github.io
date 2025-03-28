@@ -16,7 +16,7 @@
   background: rgba(255,182,193,0.5);
   border-radius: 50%;
   pointer-events: none;
-  animation: bubblePop 1s forwards;
+  animation: bubblePop 2s forwards;
   box-shadow: 0 0 15px #ffb6c1;
 }
 
@@ -101,7 +101,7 @@ document.addEventListener('dblclick', (e) => {
         .pixel-title {
             font-size: 28px;
             color: #FF6B6B;
-            margin: 30px 0;
+            margin: 50px 0;
             animation: float 2s ease-in-out infinite;
             text-align: center;
         }
@@ -201,7 +201,7 @@ body::before {
 
     <!-- 动态颜文字 -->
     <div class="face-emoji" style="top:20%;left:10%">(≧◡≦)</div>
-    <div class="face-emoji" style="top:70%;right:15%">(๑>ᴗ<๑)</div>
+    <div class="face-emoji" style="top:70%;right:15%">(>ᴗ<)</div>
 
     <h1 class="pixel-title">❤️ Y&L LoveTimer 🕹️</h1>
     
@@ -299,6 +299,26 @@ body::before {
     <div class="gallery-item" data-emoji="🌸"></div>
   </div>
 </section>
+
+<!-- 可添加的增强功能代码 -->
+<script>
+// 照片点击放大特效
+document.querySelectorAll('.gallery-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('enlarged');
+  });
+});
+</script>
+
+<style>
+/* 放大动画 */
+.gallery-item.enlarged {
+  transform: scale(2.5);
+  z-index: 100;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+</style>
+
 
 <style>
 /* 画廊样式 */
