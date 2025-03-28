@@ -7,6 +7,108 @@
             window.location.href = "about:blank";
         }
     </script>
+
+
+    <style>
+/* 泡泡特效 */
+.bubble {
+  position: absolute;
+  background: rgba(255,182,193,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: bubblePop 1s forwards;
+  box-shadow: 0 0 15px #ffb6c1;
+}
+
+@keyframes bubblePop {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+</style>
+
+<script>
+// 双击泡泡生成器
+document.addEventListener('dblclick', (e) => {
+  for(let i=0; i<5; i++) { // 每次生成5个泡泡
+    const bubble = document.createElement('div');
+    const size = Math.random() * 30 + 10; // 10~40px随机大小
+    bubble.className = 'bubble';
+    bubble.style.cssText = `
+      left: ${e.clientX - size/2}px;
+      top: ${e.clientY - size/2}px;
+      width: ${size}px;
+      height: ${size}px;
+      animation-delay: ${i*0.1}s;
+    `;
+    document.body.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 1000);
+  }
+});
+</script>
+
+    <!-- 1. 动态颜文字装饰 -->
+<div class="kaomoji">٩(◕‿◕)۶</div>
+<div class="kaomoji">(๑>ᴗ<๑)</div>
+
+<style>
+/* 颜文字动画 */
+.kaomoji {
+  position: fixed;
+  font-size: 24px;
+  opacity: 0.2;
+  animation: float 3s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* 2. 鼠标轨迹特效 */
+body:hover::after {
+  content: '';
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: rgba(255,182,193,0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: follow 0.3s linear infinite;
+}
+
+@keyframes follow {
+  to {
+    transform: translate(10px,10px);
+    opacity: 0;
+  }
+}
+
+/* 3. 像素彩虹边框 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -5px;
+  z-index: -1;
+  background: linear-gradient(
+    45deg,
+    #FFB6C1 25%,
+    #FFD700 25% 50%,
+    #87CEEB 50% 75%,
+    #98FB98 75%
+  );
+  filter: blur(5px);
+  opacity: 0.3;
+}
+</style>
+
+
     
     <style>
         :root {
