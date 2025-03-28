@@ -289,4 +289,55 @@ body::before {
 </body>
 </html>
 
+<!-- 在页面底部添加 -->
+<section class="gallery-section">
+  <h2>📸 我们的回忆画廊</h2>
+  <div class="pixel-gallery">
+    <div class="gallery-item" style="background-image: url('/Users/yucongli/Desktop/IMG_1542.JPG')"></div>
+    <div class="gallery-item" style="background-image: url('/Users/yucongli/Desktop/IMG_1543.JPG')"></div>
+    <div class="gallery-item" data-emoji="❤️"></div>
+    <div class="gallery-item" data-emoji="🌸"></div>
+  </div>
+</section>
+
+<style>
+/* 画廊样式 */
+.gallery-section {
+  margin: 40px 0;
+  padding: 20px;
+  background: #FFF8F0;
+  border-top: 4px dashed #FFB6C1;
+}
+
+.pixel-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  border: 3px solid #FFB6C1;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.gallery-item[data-emoji]::before {
+  content: attr(data-emoji);
+  opacity: 0.8;
+}
+</style>
+
+
 
