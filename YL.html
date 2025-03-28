@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        const password = prompt("请输入访问密码：");
+        if (password !== "20240308") {
+            window.location.href = "about:blank";
+        }
+    </script>
+    
+    <style>
+        :root {
+            --pink: #FFF3E0;
+            --yellow: #FFE4E1;
+            --accent: #FFB6C1;
+            --pixel: 'Press Start 2P', cursive;
+        }
+
+        body {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--yellow),
+                var(--yellow) 10px,
+                #FFFAF0 10px,
+                #FFFAF0 20px
+            );
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: var(--pixel);
+        }
+
+        .container {
+            background: var(--pink);
+            padding: 20px;
+            margin-top: 50px;
+            border: 4px solid var(--accent);
+            box-shadow: 8px 8px 0 rgba(255,182,193,0.3);
+            position: relative;
+        }
+
+        #loveTimer {
+            font-size: 24px;
+            color: #FF69B4;
+            text-shadow: 2px 2px 0 #FFF,
+                       -1px -1px 0 #FFF;
+            line-height: 1.5;
+            padding: 20px;
+            border: 2px dashed var(--accent);
+        }
+
+        .pixel-title {
+            font-size: 28px;
+            color: #FF6B6B;
+            margin: 30px 0;
+            animation: float 2s ease-in-out infinite;
+            text-align: center;
+        }
+
+        .deco-emoji {
+            position: absolute;
+            opacity: 0.3;
+            font-size: 20px;
+        }
+
+        @keyframes pixelate {
+            0% { transform: translate(0,0); }
+            50% { transform: translate(2px,2px); }
+            100% { transform: translate(0,0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* 像素风装饰元素 */
+        .pixel-border {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+        }
+
+        .face-emoji {
+            position: fixed;
+            font-size: 24px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 动态颜文字 -->
+    <div class="face-emoji" style="top:20%;left:10%">(≧◡≦)</div>
+    <div class="face-emoji" style="top:70%;right:15%">(๑>ᴗ<๑)</div>
+
+    <h1 class="pixel-title">❤️ Y&L LoveTimer 🕹️</h1>
+    
+    <div class="container">
+        <!-- 像素角装饰 -->
+        <div class="pixel-border" style="top:-8px;left:-8px;"></div>
+        <div class="pixel-border" style="top:-8px;right:-8px;"></div>
+        <div class="pixel-border" style="bottom:-8px;left:-8px;"></div>
+        <div class="pixel-border" style="bottom:-8px;right:-8px;"></div>
+
+        <div id="loveTimer">🎮 加载中...</div>
+    </div>
+
+    <script>
+        const startDate = new Date(2024, 2, 8); // 3月8日
+
+        function calculateDuration(start, now) {
+            const startCopy = new Date(start);
+            const nowCopy = new Date(now);
+
+            startCopy.setHours(0, 0, 0, 0);
+            nowCopy.setHours(0, 0, 0, 0);
+
+            let years = nowCopy.getFullYear() - startCopy.getFullYear();
+            let months = nowCopy.getMonth() - startCopy.getMonth();
+            let days = nowCopy.getDate() - startCopy.getDate();
+
+            if (days < 0) {
+                months--;
+                const lastDayOfMonth = new Date(nowCopy.getFullYear(), nowCopy.getMonth(), 0);
+                days += lastDayOfMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            return { years, months, days };
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const { years, months, days } = calculateDuration(startDate, now);
+            
+            // 添加动态颜文字
+            const emojis = ['🌸', '🎀', '🍰', '🎈', '🌟'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            document.getElementById('loveTimer').innerHTML = 
+                `${randomEmoji} ${String(years).padStart(2, '0')} 年 
+                 ${String(months).padStart(2, '0')} 月 
+                 ${String(days).padStart(2, '0')} 天 ${randomEmoji}`;
+
+            // 控制台彩蛋
+            if(years > 0) console.log("%c🎉 周年快乐！", "color: #FF69B4; font-size: 16px;");
+        }
+
+        // 初始化
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // 添加点击特效
+        document.body.addEventListener('click', function(e) {
+            const spark = document.createElement('div');
+            spark.style = `
+                position: absolute;
+                left: ${e.pageX - 8}px;
+                top: ${e.pageY - 8}px;
+                width: 16px;
+                height: 16px;
+                background: ${['#FFB6C1','#FF69B4','#FF6B6B'][Math.floor(Math.random()*3)]};
+                pointer-events: none;
+                transition: transform 0.3s, opacity 1s;
+            `;
+            document.body.appendChild(spark);
+            
+            setTimeout(() => {
+                spark.style.transform = `scale(2)`;
+                spark.style.opacity = 0;
+                setTimeout(() => spark.remove(), 1000);
+            }, 10);
+        });
+    </script>
+</body>
+</html>
+
+
